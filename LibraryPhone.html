@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Welcome to ParvUtsav Library</title>
+
+    
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">ParvUtsav Library</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+
+            </ul>
+            <!-- <form class="form-inline my-2 my-lg-0">
+                <input id = "searchTxt" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                
+            </form> -->
+        </div>
+    </nav>
+    <div id="myalert">
+
+    </div>
+    <div class="container my-3">
+        <h1>Parv-Utsav Library</h1>
+        <hr>
+        <form id="Library">
+            <div class="form-group row">
+                <label for="bookname" class="col-sm-2 col-form-label">Book Name: </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="bookname" placeholder="Book Name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="author" class="col-sm-2 col-form-label" placeholder="Author name">Author: </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="author" placeholder="Authore Name">
+                </div>
+            </div>
+            <fieldset class="form-group">
+                <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0">Book Section:</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Section" id="fiction" value="fiction"
+                                checked>
+                            <label class="form-check-label" for="fiction">
+                                Fiction
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Section" id="programming"
+                                value="programming">
+                            <label class="form-check-label" for="programming">
+                                Computer Programming
+                            </label>
+                        </div>
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="Section" id="cooking" value="cooking">
+                            <label class="form-check-label" for="cooking">
+                                Cooking
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" id="addbtn" class="btn btn-primary">Add Book</button>
+                </div>
+            </div>
+        </form>
+        <div id="table">
+            <h1>Book List:</h1>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Book ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Section</th>
+                    </tr>
+                </thead>
+                <tbody id="addList">
+
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+        <script>
+            // class Book{
+            //     constructor(name,author,section){
+            //         this.name = name;
+            //         this.author = author;
+            //         this.section = section;
+            //     }
+            // }
+        
+            class Display {
+    
+                //to save the book entry in local storage
+                saveEntry(nameVal, authorVal, sectionVal) {
+                    let bookID = localStorage.getItem("bookID");
+                    let name = localStorage.getItem("name");
+                    let author = localStorage.getItem("author");
+                    let section = localStorage.getItem("section");
+                    let IDList = []
+                    let namelist = [];
+                    let authorlist = [];
+                    let sectionlist = [];
+    
+                    if (name != null || author != null || section != null) {
+                        IDList = JSON.parse(bookID)
+                        namelist = JSON.parse(name);
+                        authorlist = JSON.parse(author);
+                        sectionlist = JSON.parse(section);
+                    }
+                    let val = Math.max(IDList);
+    
+                    (val == 0) ? IDList.push(101) : IDList.push(val + 1);
+    
+                    namelist.push(nameVal);
+                    authorlist.push(authorVal);
+                    sectionlist.push(sectionVal);
+    
+                    localStorage.setItem("bookID", JSON.stringify(IDList));
+                    localStorage.setItem("name", JSON.stringify(namelist));
+                    localStorage.setItem("author", JSON.stringify(authorlist));
+                    localStorage.setItem("section", JSON.stringify(sectionlist));
+    
+    
+                }
+    
+                //add entry to page table
+                addToPage() {
+    
+                 
+                    let bookID = localStorage.getItem("bookID");
+                    let name = localStorage.getItem("name");
+                    let author = localStorage.getItem("author");
+                    let section = localStorage.getItem("section");
+                    let IDList = []
+                    let namelist = [];
+                    let authorlist = [];
+                    let sectionlist = [];
+    
+                    if (name != null || author != null || section != null || bookID != null) {
+                        IDList = JSON.parse(bookID)
+                        namelist = JSON.parse(name);
+                        authorlist = JSON.parse(author);
+                        sectionlist = JSON.parse(section);
+    
+                        let Parent = document.getElementById('addList')
+    
+                        namelist.forEach((element, index) => {
+                            let htmlTextToAdd = `
+                    <tr>
+                    <td>${IDList[index]}</td>
+                    <td>${element}</td>
+                    <td>${authorlist[index]}</td>
+                    <td>${sectionlist[index]}</td>
+                    <td><button type="button" id=${IDList[index]} onclick="deleteBook(${IDList[index]})" class="btn btn-warning">Remove</button></td>
+                    </tr>`
+    
+                            Parent.innerHTML += htmlTextToAdd;
+                        });
+                    }
+                }
+    
+                //to clear from after sumitting
+                clearForm() {
+                    let formObj = document.getElementById('Library')
+                    formObj.reset();
+    
+                }
+    
+                //validate if all the entries are legal
+                validateForm(bookName, bookAuthor) {
+                    let navID = document.getElementById('myalert')
+                    if (bookName == '' || bookAuthor == '') {
+                        myalert.innerHTML = `<div class="alert alert-danger" role="alert">
+                                        Cann't Update! Book name/author is empty.
+                                        </div>`
+                        setTimeout(function () {
+                            navID.innerHTML = ''
+                        }, 5000)
+                        return false;
+    
+                    } else {
+    
+                        myalert.innerHTML = `<div class="alert alert-success" role="alert">
+                                Book Successfully Added.
+                                </div>`
+                        setTimeout(function () {
+                            navID.innerHTML = ''
+                        }, 5000)
+                        return true;
+                    }
+    
+                }
+    
+                //show alert after submitting the form
+                clearPageTable() {
+                    
+                    let tableObj = document.getElementById("addList")
+                    tableObj.innerHTML = ''
+                }
+            }
+    
+            let displayObj = new Display();
+            displayObj.addToPage();
+            let libraryForm = document.getElementById("Library");
+            libraryForm.addEventListener("submit", getValues);
+    
+            function getValues(e) {
+                e.preventDefault();
+                let bookName = document.getElementById('bookname').value;
+                let bookAuthor = document.getElementById('author').value;
+                let bookSection = document.getElementsByClassName("form-check-input")
+                let section;
+                for (let rbs of bookSection) {
+                    if (rbs.checked) {
+                        section = rbs.value;
+                    }
+                }
+                if (displayObj.validateForm(bookName, bookAuthor)) {
+                    // let bookObj = new Book(bookName,bookAuthor,section);
+                    displayObj.saveEntry(bookName, bookAuthor, section);
+                    displayObj.clearForm();
+                    displayObj.clearPageTable();
+                    displayObj.addToPage();
+                }
+            }
+    
+            function deleteBook(myBookID) {
+                
+                let bookID = localStorage.getItem("bookID");
+                let name = localStorage.getItem("name");
+                let author = localStorage.getItem("author");
+                let section = localStorage.getItem("section");
+    
+                let IDList = [];
+                let namelist = [];
+                let authorlist = [];
+                let sectionlist = [];
+    
+                if (name != null || author != null || section != null) {
+                    IDList = JSON.parse(bookID);
+                    namelist = JSON.parse(name);
+                    authorlist = JSON.parse(author);
+                    sectionlist = JSON.parse(section);
+                }
+                IDList.forEach((index) => {
+                    
+                    if (index == myBookID) {
+                        IDList.pop(index)
+                        namelist.pop(index);
+                        authorlist.pop(index);
+                        sectionlist.pop(index);
+                    }
+                });
+                localStorage.setItem("bookID", JSON.stringify(IDList));
+                localStorage.setItem("name", JSON.stringify(namelist));
+                localStorage.setItem("author", JSON.stringify(authorlist));
+                localStorage.setItem("section", JSON.stringify(sectionlist));
+                
+                displayObj.clearPageTable();
+                displayObj.addToPage();
+            }
+            
+    
+        </script>
+
+</body>
+
+</html>
